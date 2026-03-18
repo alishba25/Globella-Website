@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Globella – The International Fest</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+theme:{
+extend:{
+fontFamily:{
+sans:['Nunito Sans','sans-serif'],
+serif:['Yeseva One','serif']
+},
+colors:{
+brand:{
+red:'#e10108',
+teal:'#019794',
+terra:'#c0503c',
+yellow:'#e7d236',
+light:'#f3f9f4',
+darkTeal:'#013332'
+}
+}
+}
+}
+}
+</script>
+
+<style>
+
+/* HERO ZOOM */
+@keyframes zoomOut{
+from{transform:scale(1.15)}
+to{transform:scale(1)}
+}
+
+/* FLOATING SHAPES */
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-18px)}
+100%{transform:translateY(0)}
+}
+
+.float{
+animation:float 6s ease-in-out infinite;
+}
+
+/* FADE */
+.fade-up{
+opacity:0;
+transform:translateY(30px);
+transition:all 1s cubic-bezier(.16,1,.3,1);
+}
+
+.fade-up.visible{
+opacity:1;
+transform:none;
+}
+
+/* MARQUEE */
+@keyframes marquee{
+0%{transform:translateX(0)}
+100%{transform:translateX(-50%)}
+}
+
+.animate-marquee{
+animation:marquee 35s linear infinite;
+}
+
+/* GRAIN */
+.grain:after{
+content:"";
+position:absolute;
+inset:0;
+background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+opacity:.15;
+pointer-events:none;
+}
+
+/* GLOW BUTTON */
+.glow:hover{
+box-shadow:0 0 35px rgba(231,210,54,.5);
+transform:translateY(-3px);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:#019794;border-radius:6px}
+
+.coming-text{
+font-family:'Yeseva One', serif;
+color:white;
+text-shadow:
+4px 4px 0 #019794,
+8px 8px 0 #013332,
+12px 12px 18px rgba(0,0,0,0.25);
+letter-spacing:2px;
+}
+
+/* glowing border */
+
+.vendor-section{
+position:relative;
+border-radius:26px;
+}
+
+.vendor-section:before{
+content:"";
+position:absolute;
+inset:-2px;
+border-radius:28px;
+background:linear-gradient(120deg,#e7d236,#e10108,#019794,#e7d236);
+background-size:300% 300%;
+animation:borderGlow 8s linear infinite;
+z-index:-1;
+filter:blur(7px);
+}
+
+@keyframes borderGlow{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* spotlight */
+
+.spotlight{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:420px;
+height:420px;
+background:radial-gradient(circle,#e7d23640,transparent 70%);
+filter:blur(55px);
+pointer-events:none;
+}
+
+/* vertical word carousel */
+
+.word-carousel{
+position:relative;
+height:1.25em;
+overflow:hidden;
+display:inline-block;
+}
+
+.word-carousel-inner{
+display:flex;
+flex-direction:column;
+animation:carouselWords 6s infinite;
+}
+
+.word-carousel-inner span{
+padding:0.35em 0; /* creates spacing between words */
+}
+
+@keyframes carouselWords{
+
+0%{transform:translateY(0)}
+
+40%{transform:translateY(0)}
+
+50%{transform:translateY(-1.9em)}
+
+90%{transform:translateY(-1.9em)}
+
+100%{transform:translateY(-3.8em)}
+
+}
+
+.word-highlight{
+color:#e7d236;
+text-shadow:
+0 0 10px rgba(231,210,54,.45),
+0 0 25px rgba(231,210,54,.25);
+}
+
+</style>
+
+</head>
+
+<body class="bg-gradient-to-b from-[#f3f9f4] via-[#fffdf6] to-[#f3f9f4] text-gray-900 antialiased overflow-x-hidden">
+
+<!-- NAVIGATION -->
+
+<nav class="fixed w-full z-50 backdrop-blur-xl bg-white/60 border-b border-white/20 px-6 py-4">
+
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+
+<img src="images/logo.png" class="h-10">
+
+<div class="hidden md:flex gap-10 text-xs uppercase tracking-widest font-bold">
+
+<a href="#about" class="hover:text-brand-red transition">About</a>
+<a href="#heritage" class="hover:text-brand-teal transition">Events</a>
+<a href="#visit" class="hover:text-brand-yellow transition">Contact</a>
+
+</div>
+
+<button class="md:hidden">
+<i data-lucide="menu"></i>
+</button>
+
+</div>
+</nav>
+
+<!-- HERO -->
+
+<header class="relative h-screen flex items-center justify-center overflow-hidden grain">
+
+<div class="sun-glow"></div>
+
+<img
+src="images/header.svg"
+class="absolute inset-0 w-full h-full object-contain animate-[zoomOut_14s_ease-out_forwards]"
+>
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#f3f9f4]/70 via-[#e7d236]/10 to-transparent"></div>
+
+<!-- CTA -->
+
+<div class="absolute bottom-20 text-center fade-up">
+
+<a href="#about"
+class="glow px-10 py-4 rounded-full bg-brand-yellow text-gray-900 font-bold text-xs tracking-widest uppercase transition hover:bg-brand-red hover:text-white">
+
+Explore Festival
+
+</a>
+
+</div>
+
+</header>
+
+<!-- INTRODUCTION -->
+
+<section id="about" class="relative section-overlap bg-[#eaf7f6] py-36 px-6 overflow-hidden">
+
+<!-- decorative glow shapes -->
+
+<div class="absolute top-10 left-20 w-32 h-32 bg-brand-yellow/30 rounded-full blur-3xl"></div>
+<div class="absolute bottom-16 right-16 w-40 h-40 bg-brand-red/20 rounded-full blur-3xl"></div>
+<div class="absolute top-1/2 left-1/3 w-28 h-28 bg-brand-teal/20 rounded-full blur-3xl"></div>
+
+<div class="max-w-4xl mx-auto text-center relative fade-up">
+
+<!-- small festival label -->
+
+<p class="uppercase tracking-[0.35em] text-xs text-brand-red mb-6 font-semibold">
+A Global Summer Celebration
+</p>
+
+<!-- title -->
+
+<h2 class="font-serif text-4xl md:text-5xl text-brand-teal mb-12">
+Globella – The International Fest
+</h2>
+
+<!-- main text -->
+
+<p class="text-lg md:text-xl leading-relaxed text-gray-800 font-light mb-6">
+
+Globella is a two-day summer festival in <span class="text-brand-teal font-semibold">Winnipeg</span> that brings together cultures from around the world through 
+<span class="text-brand-red font-medium">food</span>, 
+<span class="text-brand-red font-medium">music</span>, 
+<span class="text-brand-red font-medium">performances</span>, and 
+<span class="text-brand-red font-medium">local businesses</span>.
+
+</p>
+
+<p class="text-lg md:text-xl leading-relaxed text-gray-800 font-light mb-6">
+
+It creates a vibrant space where communities share their traditions while visitors discover global experiences all in one place.
+
+</p>
+
+<p class="text-lg md:text-xl leading-relaxed text-gray-800 font-light">
+
+Designed as a lively outdoor celebration, Globella highlights the diversity that makes the city unique while creating a fun and welcoming atmosphere for everyone.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- BECOME VENDOR / SPONSOR -->
+
+<section class="relative py-20 px-6 overflow-hidden bg-brand-red text-white text-center">
+
+<!-- TOP WAVE -->
+
+<div class="absolute -top-1 left-0 w-full overflow-hidden">
+<svg viewBox="0 0 1440 120" class="w-full h-[90px]" preserveAspectRatio="none">
+<path fill="#eaf7f6"
+d="M0,40 C200,120 400,0 700,60 C1000,120 1200,0 1440,50 L1440,0 L0,0 Z"></path>
+</svg>
+</div>
+
+<div class="vendor-section max-w-3xl mx-auto bg-brand-red py-14 px-6">
+
+<div class="spotlight"></div>
+
+<div class="fade-up">
+
+<!-- pill label -->
+
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-yellow text-brand-yellow text-[10px] tracking-[0.35em] uppercase mb-8">
+
+<span>★</span>
+<span>Join The Celebration</span>
+
+</div>
+
+<!-- headline -->
+
+<h2 class="font-serif text-3xl md:text-5xl leading-tight">
+
+<span class="block mb-2">Become a</span>
+
+<span class="word-carousel word-highlight text-4xl md:text-5xl">
+
+<span class="word-carousel-inner">
+
+<span>Vendor</span>
+<span>Sponsor</span>
+<span>Vendor</span>
+
+</span>
+
+</span>
+
+</h2>
+
+<!-- CTA cards -->
+
+<div class="mt-10 grid md:grid-cols-2 gap-6 max-w-lg mx-auto">
+
+<!-- Vendor -->
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSdj17Hk3BE0Tb9pN-xX-ZfkNKJsjTo5dI8vJrgk-JqxqmbrgQ/viewform?usp=publish-editor"
+class="bg-white text-brand-red rounded-xl px-5 py-6 hover:scale-105 transition shadow-md">
+
+<h3 class="font-serif text-lg mb-1">
+Vendor
+</h3>
+
+<p class="text-xs opacity-70 mb-3">
+Showcase food, crafts, or products.
+</p>
+
+<span class="text-[10px] tracking-widest uppercase font-bold">
+Apply →
+</span>
+
+</a>
+
+<!-- BACKGROUND SCROLL TEXT -->
+
+<div class="absolute inset-0 flex items-center whitespace-nowrap opacity-[0.08] pointer-events-none">
+
+<div class="animate-marquee text-[14rem] font-serif text-brand-teal">
+
+• JOIN TODAY • BE A PART OF GLOBELLA
+
+</div>
+
+<div class="animate-marquee text-[14rem] font-serif text-brand-teal">
+
+• JOIN TODAY • BE A PART OF GLOBELLA
+
+</div>
+
+</div>
+
+<!-- Sponsor -->
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSeV4HLew6zQj--Q9-NzfCtXfEFHDrnaKsYDoNMYXBYg2V7rRw/viewform?usp=publish-editor"
+class="bg-brand-yellow text-gray-900 rounded-xl px-5 py-6 hover:scale-105 transition shadow-md">
+
+<h3 class="font-serif text-lg mb-1">
+Sponsor
+</h3>
+
+<p class="text-xs opacity-80 mb-3">
+Partner with Globella.
+</p>
+
+<span class="text-[10px] tracking-widest uppercase font-bold">
+Partner →
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM WAVE -->
+
+<div class="absolute -bottom-1 left-0 w-full overflow-hidden rotate-180">
+<svg viewBox="0 0 1440 120" class="w-full h-[90px]" preserveAspectRatio="none">
+<path fill="#eaf7f6"
+d="M0,40 C200,120 400,0 700,60 C1000,120 1200,0 1440,50 L1440,0 L0,0 Z"></path>
+</svg>
+</div>
+
+</section>
+
+<!-- COMING SOON -->
+
+<section class="relative section-overlap py-44 flex items-center justify-center overflow-hidden bg-brand-yellow">
+
+<!-- TOP CURVE -->
+
+<div class="absolute -top-1 left-0 w-full overflow-hidden">
+<svg viewBox="0 0 1440 120" class="w-full h-[120px]" preserveAspectRatio="none">
+<path fill="#eaf7f6"
+d="M0,40 C200,120 400,0 700,60 C1000,120 1200,0 1440,50 L1440,0 L0,0 Z"></path>
+</svg>
+</div>
+
+<!-- BACKGROUND SCROLL TEXT -->
+
+<div class="absolute inset-0 flex items-center whitespace-nowrap opacity-[0.08] pointer-events-none">
+
+<div class="animate-marquee text-[14rem] font-serif text-brand-red">
+
+SUMMER 2026 • GLOBELLA FEST • CULTURE • MUSIC • FOOD • COMMUNITY •
+
+</div>
+
+<div class="animate-marquee text-[14rem] font-serif text-brand-red">
+
+SUMMER 2026 • GLOBELLA FEST • CULTURE • MUSIC • FOOD • COMMUNITY •
+
+</div>
+
+</div>
+
+<!-- MAIN TEXT -->
+
+<div class="relative text-center">
+
+<h2 class="coming-text text-[6rem] md:text-[11rem] leading-[0.9]">
+
+<span class="block hover:-translate-y-2 transition duration-500">
+COMING
+</span>
+
+<span class="block hover:translate-y-2 transition duration-500">
+SOON!
+</span>
+
+</h2>
+
+</div>
+
+<!-- BOTTOM CURVE -->
+
+<div class="absolute -bottom-1 left-0 w-full overflow-hidden rotate-180">
+<svg viewBox="0 0 1440 120" class="w-full h-[120px]" preserveAspectRatio="none">
+<path fill="#eaf7f6"
+d="M0,40 C200,120 400,0 700,60 C1000,120 1200,0 1440,50 L1440,0 L0,0 Z"></path>
+</svg>
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer id="visit" class="bg-gradient-to-br from-brand-teal via-[#017f7c] to-[#013332] text-white pt-28 pb-14 px-6">
+
+<div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-20">
+
+<div>
+<h3 class="font-serif text-3xl mb-4">Globella</h3>
+</div>
+
+<div>
+<h4 class="text-xs tracking-[.25em] uppercase text-brand-yellow mb-6">Location</h4>
+<p class="text-sm opacity-80">Winnipeg<br>Canada</p>
+</div>
+
+<div>
+<h4 class="text-xs tracking-[.25em] uppercase text-brand-yellow mb-6">Date</h4>
+<p class="text-sm opacity-80">
+June 28–29<br>
+11:00 AM – 7:00 PM
+</p>
+</div>
+
+<div>
+
+<h4 class="text-xs tracking-[.25em] uppercase text-brand-yellow mb-6">Contact</h4>
+
+        <p class="text-sm opacity-80">         <a href="mailto:info@globellafest.com" class="hover:text-brand-yellow transition">info@globellafest.com</a>       </p>
+
+<div class="flex gap-4 mt-6">
+
+<i data-lucide="instagram"></i>
+<i data-lucide="facebook"></i>
+<i data-lucide="twitter"></i>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="border-t border-white/10 pt-8 flex justify-between text-xs uppercase tracking-widest opacity-50">
+
+<p>© 2026 Globella</p>
+
+<p>Privacy · Terms</p>
+
+</div>
+
+</footer>
+
+<script>
+
+lucide.createIcons()
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible")
+}
+})
+})
+
+document.querySelectorAll(".fade-up").forEach(el=>observer.observe(el))
+
+</script>
+
+</body>
+</html>
